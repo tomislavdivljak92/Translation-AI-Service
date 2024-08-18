@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Translator Service</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  background-color: #34568B;
+}
+
+.container {
+  flex: 1;
+  padding-top: 90px; /* Increased padding to prevent overlap */
+}
+
+.navbar-navbar {
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.btn-primary {
+  background-color: #88B04B;
+  border-color: #88B04B;
+}
+
+.form-label {
+  color: #34568B; /* Maintain the color */
+  font-weight: bold; /* Make the text bold */
+  font-size: 1.1rem; /* Increase the font size slightly for a more prominent look */
+  text-align: center; /* Center the text */
+  display: block; /* Ensure the label takes up the full width of the parent */
+  margin-bottom: 5px; /* Add some space below the label for better readability */
+}
+
+.logo {
+  max-width: 30%;
+  height: auto;
+  padding: 20px;
+}
+
+.footer {
+  color: black;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.form-box {
+  width: 100%;
+  max-width: 600px;
+  margin: 10px 0;
+}
+
+.btn-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+
+.progress-bar {
+  width: 0;
+  transition: width 0.5s ease;
+}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid justify-content-center">
+      <a class="navbar-brand" href="#">Translator Service</a>
+    </div>
+  </nav>
+    <div class="container">
+      
+      <form id="translationForm">
+        <div class="form-group">
+        <label for="textToTranslate">Text to translate</label>
+        <textarea class="form-control" id="textToTranslate" rows="4" placeholder="Enter text here..."></textarea>
+        </div>
+    
+
+        <div class="mt-4">
+          <label for="languages">Languages (comma-separated)></label>
+          <input type="text" class="form-control" id="languages" placeholder="e.g., english, german, russian">
+          <button type="button" class="btn btn-primary mt-2 translate-button" onclick="submitTranslation()">Translate</button>
+
+        </div>
+    
+          
+          </form>
+    
+  
+
+  <div class="mt-4" id="results" style="display: none;">
+    <h3>Translation Results</h3>
+    <pre id="TranslationResult"></pre>
+  </div>
+
+  <div class="mt-4" id="progress-container">
+    <h4 id="progress-text">Translation in progress...</h4>
+    <div class="progress">
+      <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animation"></div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <label for="search-id">Check Translation by ID</label>
+    <input type="number" id="search-id" class="form-control" placeholder="Enter Translation ID">
+    <button id="search-button" class="btn btn-info mt-2" onclick="checkTranslationStatus()">Check Status</button>
+    <button id="content-button" class="btn btn-secondary mt-2" onclick="checkTranslationContent()">Check Content</button>
+  </div>
+
+
+  <div class="mt-4" id="status-container" style="display: none;">
+    <h4>Translation Status</h4>
+    <pre id="statusResult"></pre>
+  </div>
+  <div class="mt-4" id="content-container" style="display: none;">
+    <h4>Translation Content</h4>
+    <pre id="contentResult"></pre>
+  </div>
+</div>
+  <div class="footer">
+    &copy; 2024 Translator Service
+  </div>
+
+  <!--Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.sjdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- axios for making http requests -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    
+
+
+
+
+
+<script>
+  async function submitTranslation() {
+    const text = document.getElementById("textToTranslate").value;
+    const languages = document.getElementById('languages').value.split(",").map(Lang => Lang.trim());
+
+    if (!text || languages === 0 || languages[0]) {
+        alert("Please provide both text and target language")
+        return;
+    }
+
+    const progresBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    progressBar.classList.remove('bg-success');
+    progressBar.classList.add('bg-primary');
+    progressBar.style.width = '0%';
+    progressText.textContent = 'Translation in progress...';
+
+    try {
+      const response = await axios.post('localhost:8000/translate',{
+          text: text,
+          languages: languages
+
+      });
+
+      const taskId = response.data.task_id;
+      alert('Task ID: ${taskId}') //
+
+      document.getElementById('progress-container').style.display = 'block';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('status-container').style.display = 'none';
+      document.getElementById('content-container').style.display = 'none';
+
+      let translationResult = null;
+      let progress = 0;
+      while (progress < 100) {
+        await new Promise(resolve =>setTimeout(resolve, 1000));
+        const resultResponse = await axios.get(`loalhost:8000/translate)${taskId}`);
+        translationResult = resultResponse.data;
+        if (TranslationResult === 'completed') {
+            progress = 100;
+
+        } else {
+            progress.style.width = `50%`;
+        }
+      }
+
+      progressBar.classList.remove('bg-primary');
+      progressBar.classList.add('bg-success');
+      progressBar.style.width = `100%`;
+      progressText.textContent = `Translation complete`;
+
+      document.getElementById(`translationResults`).textcontent = JSON.stringify(translationResult.translations)
+      document.getElementById('results').style.display = 'block';
+    } catch (error) {
+      console.error("Error submitting translation", error);
+      alert("An error occured while translating, please try again. ")
+
+    }
+  }
+</script>
