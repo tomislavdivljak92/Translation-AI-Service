@@ -3,8 +3,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 import schemas
-
-
+import crud
+from database import get_db
 
 from fastapi.templating import Jinja2Templates
 
@@ -25,7 +25,7 @@ def index(request: Request):
 def translate(request: schemas.TranslationRequest):
     #create a new translation task
 
-    task = crud.create_translation_task(x, y, ,p)
+    task = crud.create_translation_task(db, request.text, request.languages)
 
-    background_tasks.add_task(perform_translation, task.id, request.text, request.language, db)
+    background_tasks.add_task(perform_translation, task.id, request.text, request.languages, get_db.db)
     return {"task_id": {task.id}}
