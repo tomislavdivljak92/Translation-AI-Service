@@ -3,12 +3,24 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 import schemas
+from sqlalchemy.orm import Session 
 import crud
-from database import get_db
+import models
+from database import get_db, engine
 
 from fastapi.templating import Jinja2Templates
-
+models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 
 #set up for jinja templates
 templates = Jinja2Templates(directory="templates")
@@ -19,13 +31,34 @@ def index(request: Request):
 
 
 
-#enable CORS
 
 @app.post('/translate', response_model=schemas.TaskResponse)
-def translate(request: schemas.TranslationRequest):
+def translate(request: schemas.TranslationRequest, background_task: BackgroundTasks, db: Session = Depends(get_db)):
     #create a new translation task
 
     task = crud.create_translation_task(db, request.text, request.languages)
 
-    background_tasks.add_task(perform_translation, task.id, request.text, request.languages, get_db.db)
+    background_tasks.add_task(perform_translation, task.id, request.text, request.languages, db)
     return {"task_id": {task.id}}
+
+
+@app.get('/translate/{task_id}', response_model=schemas.TranslationStatus)
+def get_translate(task_id: int, db: Session = Depends(get_db)):
+    
+
+    task = crud.get_translation_task(db, task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="task not found")
+    
+    return {"task_id": task.id, "status": task.status, "translation": task.translations}
+
+
+@app.get('/translate/content/{task_id}', response_model=schemas.TranslationStatus)
+def get_translate_content(task_id: int, db: Session = Depends(get_db)):
+    
+
+    task = crud.get_translation_task(db, task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="task not found")
+    
+    return {task}
