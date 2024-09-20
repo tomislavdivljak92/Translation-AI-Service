@@ -225,11 +225,40 @@
 
   // search functionality component TODO
   async function checkTranslationStatus() {
-    return;
+    const id = document.getElementById('search-id').value;
+    try{
+      const response = await axios.get(`http://localhost:8000/translate/${id}`);
+      const translationResult = response.data;
+      document.getElementById('translationResults').textContent = JSON.stringify(translationResult.translations, null, 2);
+      document.getElementById('results').style.display = 'block';
+
+      // display the translation status
+      document.getElementById('statusResult').textContent = `Status: ${translationResult.status}`;
+      document.getElementById('status-container').style.display = 'block';
+    } catch(error) {
+        console.error("Error fetching translation status:", error)
+        alert("An error occured while fetching the translation status. Please try again.");
+
+    }
+    
   }
 
+
+
   async function checkTranslationContent(){
-    return;
+    const id = document.getElementById('search-id').value;
+    try {
+      const response = await axios.get(`http://localhost:8000/translate/content/${id}`);
+      const contentResult = response.data;
+
+      document.getElementById('translationResults').textContent = JSON.stringify(translationResult.translations, null, 2);
+      document.getElementById('results').style.display = 'block';
+    } catch (error) {
+        console.error("Error fetching translation status:", error)
+        alert("An error occured while fetching the translation status. Please try again.");
+
+    }
+    
     
   }
 
