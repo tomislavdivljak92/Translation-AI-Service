@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 import crud
 import models
 from database import get_db, engine
+from utily import perform_translation
+
 
 from fastapi.templating import Jinja2Templates
 models.Base.metadata.create_all(bind=engine)
@@ -35,7 +37,7 @@ def index(request: Request):
 
 
 @app.post('/translate', response_model=schemas.TaskResponse)
-def translate(request: schemas.TranslationRequest, background_task: BackgroundTasks, db: Session = Depends(get_db)):
+def translate(request: schemas.TranslationRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     #create a new translation task
 
     task = crud.create_translation_task(db, request.text, request.languages)
