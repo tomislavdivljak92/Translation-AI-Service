@@ -6,11 +6,14 @@ import schemas
 from sqlalchemy.orm import Session 
 import crud
 import models
-from database import get_db, engine
+from database import get_db, engine, SessionLocal
 from utily import perform_translation
+from typing import List
+import uuid
 
 
 from fastapi.templating import Jinja2Templates
+
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
@@ -57,7 +60,7 @@ def get_translate(task_id: int, db: Session = Depends(get_db)):
     return {"task_id": task.id, "status": task.status, "translation": task.translations}
 
 
-@app.get('/translate/content/{task_id}', response_model=schemas.TranslationStatus)
+@app.get("/translate/content/{task_id}")
 def get_translate_content(task_id: int, db: Session = Depends(get_db)):
     
 
@@ -65,4 +68,4 @@ def get_translate_content(task_id: int, db: Session = Depends(get_db)):
     if not task:
         raise HTTPException(status_code=404, detail="task not found")
     
-    return {task}
+    return task
