@@ -211,7 +211,7 @@
       progressBar.style.width = `100%`;
       progressText.textContent = `Translation complete`;
 
-      document.getElementById('translationResults').textContent = JSON.stringify(contentResult.translations, null, 2);
+      document.getElementById('TranslationResult').textContent = JSON.stringify(translationResult.translations, null, 2);
       document.getElementById('results').style.display = 'block';
     } catch (error) {
       console.error("Error submitting translation", error);
@@ -228,7 +228,7 @@
     try{
       const response = await axios.get(`http://localhost:8000/translate/${id}`);
       const translationResult = response.data;
-      document.getElementById('translationResults').textContent = JSON.stringify(translationResult.translations, null, 2);
+      document.getElementById('TranslationResult').textContent = JSON.stringify(translationResult.translations, null, 2);
       document.getElementById('results').style.display = 'block';
 
       // display the translation status

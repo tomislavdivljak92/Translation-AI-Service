@@ -46,18 +46,18 @@ def translate(request: schemas.TranslationRequest, background_tasks: BackgroundT
     task = crud.create_translation_task(db, request.text, request.languages)
 
     background_tasks.add_task(perform_translation, task.id, request.text, request.languages, db)
-    return {"task_id": {task.id}}
+    return {"task_id": task.id}
 
 
-@app.get('/translate/{task_id}', response_model=schemas.TranslationStatus)
-def get_translate(task_id: int, db: Session = Depends(get_db)):
+@app.get("/translate/{task_id}", response_model=schemas.TranslationStatus)
+def get_translation(task_id: int, db: Session = Depends(get_db)):
     
 
     task = crud.get_translation_task(db, task_id)
     if not task:
-        raise HTTPException(status_code=404, detail="task not found")
+        raise HTTPException(status_code=404, detail="Task not found")
     
-    return {"task_id": task.id, "status": task.status, "translation": task.translations}
+    return {"task_id": task.id, "status": task.status, "translations": task.translations}
 
 
 @app.get("/translate/content/{task_id}")
