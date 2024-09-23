@@ -31,5 +31,5 @@ def perform_translation(task_id: int, text: str, languages: list, db: Session):
     update_translation_task(db, task_id, translations)
 
 # Test model list retrieval to verify models are available
-models = openai.Model.list()
-print(models)
+#models = openai.Model.list()
+#print(models)
