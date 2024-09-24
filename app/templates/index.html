@@ -11,19 +11,28 @@
   margin: 0;
   display: flex;
   flex-direction: column;
+  background-color: #1a1a1a; /* Dark background */
+  color: #e0e0e0; /* Light text color for readability */
 }
 
 .navbar {
-  background-color: #34568B;
+  background-color: #3a95a5 !important; /* Override Bootstrap's default color */
 }
 
+.navbar .navbar-brand {
+  color: #fff !important; /* Ensure the text color is white */
+}
+
+.navbar .navbar-brand:hover {
+  color: #bfbfbf !important; /* Optional: Change text color on hover */
+}
 .container {
   flex: 1;
   padding-top: 90px; /* Increased padding to prevent overlap */
 }
 
 .navbar-navbar {
-  color: white;
+  color: rgb(255, 255, 255);
   font-size: 1.5rem;
   text-decoration: none;
 }
@@ -54,7 +63,7 @@
 }
 
 .footer {
-  color: black;
+  color: rgb(169, 169, 169);
   text-align: center;
   padding: 10px 0;
   width: 100%;
@@ -66,6 +75,29 @@
   align-items: center;
   flex-direction: column;
   padding: 20px;
+}
+
+.form-control {
+  background-color: #4a4a4a; /* Light grey background for input fields */
+  color: #d1d1d1; /* Dark text color for better contrast */
+  border-color: #888; /* Adjust the border color */
+}
+
+.form-control:focus {
+  background-color: #616161; /* Keep light grey background on focus */
+  color: #d1d1d1; /* Maintain dark text color */
+  border-color: #555; /* Optional: slightly darker border on focus */
+  outline: none; /* Remove the default blue outline on focus */
+  box-shadow: none; /* Remove any shadow effect on focus */
+}
+
+.form-control::placeholder {
+  color: #aaa; /* Light grey color for placeholder text */
+  opacity: 1;  /* Ensure the placeholder text is fully visible */
+}
+
+.form-control:focus::placeholder {
+  color: #bbb; /* Slightly different color when focused, optional */
 }
 
 .form-box {
@@ -85,12 +117,36 @@
   width: 0;
   transition: width 0.5s ease;
 }
+
+.translate-button {
+  background-color: #3a95a5 !important; /* Change this to your desired color */
+  border-color: #9d9d9d !important; /* Match border color */
+  color: #fff; /* Ensure text is white for contrast */
+}
+
+.translate-button:hover {
+  background-color: #296772 !important; /* Darker shade on hover */
+  border-color: #8a8a8a !important; /* Match border on hover */
+}
+
+
+#search-button {
+  background-color: #3a95a5 !important; /* Change this to your desired color */
+  border-color: #9d9d9d !important; /* Match border color */
+  color: #fff; /* Ensure text is white for contrast */
+}
+
+#search-button:hover {
+  background-color: #296772 !important; /* Darker shade on hover */
+  border-color: #8a8a8a !important; /* Match border on hover */
+}
+
   </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container-fluid justify-content-center">
-      <a class="navbar-brand" href="#">Translator Service</a>
+      <a class="navbar-brand" href="#">Translation AI Service</a>
     </div>
   </nav>
     <div class="container">
@@ -144,7 +200,7 @@
   </div>
 </div>
   <div class="footer">
-    &copy; 2024 Translator Service
+    &copy; 2024 Translation AI Service
   </div>
 
   <!--Bootstrap JS and dependencies -->
