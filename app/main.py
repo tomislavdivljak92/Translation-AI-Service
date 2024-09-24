@@ -10,12 +10,14 @@ from database import get_db, engine, SessionLocal
 from utily import perform_translation
 from typing import List
 import uuid
-
+from fastapi.staticfiles import StaticFiles
 
 from fastapi.templating import Jinja2Templates
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Add CORS middleware
 app.add_middleware(

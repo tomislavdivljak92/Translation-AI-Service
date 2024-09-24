@@ -1,0 +1,134 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a1a; /* Dark background */
+  color: #e0e0e0; /* Light text color for readability */
+}
+
+.navbar {
+  background-color: #3a95a5 !important; /* Override Bootstrap's default color */
+}
+
+.navbar .navbar-brand {
+  color: #fff !important; /* Ensure the text color is white */
+}
+
+.navbar .navbar-brand:hover {
+  color: #bfbfbf !important; /* Optional: Change text color on hover */
+}
+.container {
+  flex: 1;
+  padding-top: 90px; /* Increased padding to prevent overlap */
+}
+
+.navbar-navbar {
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.btn-primary {
+  background-color: #88B04B;
+  border-color: #88B04B;
+}
+
+.form-label {
+  color: #34568B; /* Maintain the color */
+  font-weight: bold; /* Make the text bold */
+  font-size: 1.1rem; /* Increase the font size slightly for a more prominent look */
+  text-align: center; /* Center the text */
+  display: block; /* Ensure the label takes up the full width of the parent */
+  margin-bottom: 5px; /* Add some space below the label for better readability */
+}
+
+.logo {
+  max-width: 30%;
+  height: auto;
+  padding: 20px;
+}
+
+.footer {
+  color: rgb(169, 169, 169);
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.form-control {
+  background-color: #4a4a4a; /* Light grey background for input fields */
+  color: #d1d1d1; /* Dark text color for better contrast */
+  border-color: #888; /* Adjust the border color */
+}
+
+.form-control:focus {
+  background-color: #616161; /* Keep light grey background on focus */
+  color: #d1d1d1; /* Maintain dark text color */
+  border-color: #555; /* Optional: slightly darker border on focus */
+  outline: none; /* Remove the default blue outline on focus */
+  box-shadow: none; /* Remove any shadow effect on focus */
+}
+
+.form-control::placeholder {
+  color: #aaa; /* Light grey color for placeholder text */
+  opacity: 1;  /* Ensure the placeholder text is fully visible */
+}
+
+.form-control:focus::placeholder {
+  color: #bbb; /* Slightly different color when focused, optional */
+}
+
+.form-box {
+  width: 100%;
+  max-width: 600px;
+  margin: 10px 0;
+}
+
+.btn-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+
+.progress-bar {
+  width: 0;
+  transition: width 0.5s ease;
+}
+
+.translate-button {
+  background-color: #3a95a5 !important; /* Change this to your desired color */
+  border-color: #9d9d9d !important; /* Match border color */
+  color: #fff; /* Ensure text is white for contrast */
+}
+
+.translate-button:hover {
+  background-color: #296772 !important; /* Darker shade on hover */
+  border-color: #8a8a8a !important; /* Match border on hover */
+}
+
+
+#search-button {
+  background-color: #3a95a5 !important; /* Change this to your desired color */
+  border-color: #9d9d9d !important; /* Match border color */
+  color: #fff; /* Ensure text is white for contrast */
+}
+
+#search-button:hover {
+  background-color: #296772 !important; /* Darker shade on hover */
+  border-color: #8a8a8a !important; /* Match border on hover */
+}
