@@ -78,9 +78,10 @@ body, html {
 .form-control:focus {
   background-color: #616161; /* Keep light grey background on focus */
   color: #d1d1d1; /* Maintain dark text color */
-  border-color: #555; /* Optional: slightly darker border on focus */
+  border-color: #3a95a5; /* Optional: slightly darker border on focus */
   outline: none; /* Remove the default blue outline on focus */
-  box-shadow: none; /* Remove any shadow effect on focus */
+  box-shadow: 0 2px 8px #3a95a5; /* Remove any shadow effect on focus */
+  transition: 0.2s ease-in-out;
 }
 
 .form-control::placeholder {

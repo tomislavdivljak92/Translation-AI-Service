@@ -2,12 +2,13 @@ from fastapi import FastAPI, BackgroundTasks, HTTPException, Request, Depends
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from . import schemas
+
+import schemas
 from sqlalchemy.orm import Session 
-from . import crud
-from . import models
-from .database import get_db, engine, SessionLocal
-from .utily import perform_translation
+import crud
+import models
+from database import get_db, engine, SessionLocal
+from utily import perform_translation
 from typing import List
 import uuid
 from fastapi.staticfiles import StaticFiles
