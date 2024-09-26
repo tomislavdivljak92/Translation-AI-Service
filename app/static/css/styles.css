@@ -16,7 +16,9 @@ body, html {
 }
 
 .navbar .navbar-brand:hover {
-  color: #bfbfbf !important; /* Optional: Change text color on hover */
+  
+  color: #4a4a4a !important; /* Optional: Change text color on hover */
+  transition: 0.2s ease-in-out !important;
 }
 .container {
   flex: 1;
