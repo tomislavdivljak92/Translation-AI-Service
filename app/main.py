@@ -3,12 +3,12 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 
-import schemas
+from app import schemas
 from sqlalchemy.orm import Session 
-import crud
-import models 
-from database import get_db, engine, SessionLocal
-from utily import perform_translation
+from app import crud
+from app import models 
+from app.database import get_db, engine, SessionLocal
+from app.utily import perform_translation
 from typing import List
 import uuid
 from fastapi.staticfiles import StaticFiles

@@ -1,6 +1,6 @@
 import openai
 from sqlalchemy.orm import Session
-from crud import update_translation_task
+from app.crud import update_translation_task
 from dotenv import load_dotenv
 import os
 
