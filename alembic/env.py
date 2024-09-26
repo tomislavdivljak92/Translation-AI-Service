@@ -2,7 +2,7 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
-
+import os
 # Import your Base and models
 from models import Base  # Adjust this import to match your project structure
 
@@ -13,6 +13,16 @@ config = context.config
 # Interpret the config file for Python logging.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
+# Load database URL from an environment variable
+
+
+DATABASE_URL = os.getenv("DATABASE_URL_FASTAPI")
+if DATABASE_URL is None:
+    raise ValueError("DATABASE_URL_FASTAPI environment variable not set.")
+
+# Set the SQLAlchemy URL in the Alembic config
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
+
 
 # Set target_metadata to your model's metadata
 target_metadata = Base.metadata
