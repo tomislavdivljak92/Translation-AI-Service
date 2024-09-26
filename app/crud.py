@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app import models
+import models
 
 
 def create_translation_task(db: Session, text: str, languages: list):
