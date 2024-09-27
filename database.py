@@ -24,4 +24,4 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-
+print("SQLALCHEMY_DATABASE_URL:", SQLALCHEMY_DATABASE_URL)
