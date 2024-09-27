@@ -15,7 +15,7 @@ async function submitTranslation() {
     progressText.textContent = 'Translation in progress...';
 
     try {
-      const response = await axios.post('http://localhost:8000/translate',{
+      const response = await axios.post('http://translation-ai-service.onrender.com/translate',{
           text: text,
           languages: languages
 
@@ -33,7 +33,7 @@ async function submitTranslation() {
       let progress = 0;
       while (progress < 100) {
         await new Promise(resolve =>setTimeout(resolve, 1000));
-        const resultResponse = await axios.get(`http://localhost:8000/translate/${taskId}`);
+        const resultResponse = await axios.get(`http://translation-ai-service.onrender.com/translate/${taskId}`);
         translationResult = resultResponse.data;
       if (translationResult.status === 'completed') {
           progress = 100;
@@ -62,7 +62,7 @@ async function submitTranslation() {
   async function checkTranslationStatus() {
     const id = document.getElementById('search-id').value;
     try {
-        const response = await axios.get(`http://localhost:8000/translate/${id}`);
+        const response = await axios.get(`http://translation-ai-service.onrender.com/translate/${id}`);
         const translationResult = response.data;
         //document.getElementById('translationResult').textContent = JSON.stringify(translationResult.translations, null, 2);
         //document.getElementById('results').style.display = 'block';
@@ -83,7 +83,7 @@ async function submitTranslation() {
   async function checkTranslationContent(){
     const id = document.getElementById('search-id').value;
     try {
-      const response = await axios.get(`http://localhost:8000/translate/content/${id}`);
+      const response = await axios.get(`http://translation-ai-service.onrender.com/translate/content/${id}`);
       const contentResult = response.data;
 
       document.getElementById('contentResult').textContent = JSON.stringify(contentResult.translations, null, 2);
