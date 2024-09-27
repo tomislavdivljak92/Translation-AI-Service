@@ -39,7 +39,9 @@ templates = Jinja2Templates(directory="templates")
 def index(request: Request):
     return templates.TemplateResponse("index.html", {"request":request })
 
-
+@app.head('/')  # Handle HEAD requests for the root path
+def head_root():
+    return {}
 
 
 @app.post('/translate', response_model=schemas.TaskResponse)
